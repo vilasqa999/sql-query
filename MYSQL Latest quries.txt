@@ -1,0 +1,173 @@
+
+30-09-2023
+
+=======================
+
+
+create TABLE Student(Studentid int(5), sanme varchar(100), marks int(5));
+create TABLE Employee(Empid int(5), ename varchar(100), salary int(5));
+
+insert into Student values(1, "Vilas", 85);
+
+insert into Student values(1, "Amit", 85);
+insert into Student values(1, "Amar", 88);
+insert into Student values(1, "Vikas", 90);
+insert into Student values(1, "Ashok", 67);
+
+
+select * from  Student; 
+select max(marks) from student where marks < (select max(marks) from student);
+
+select sanme from student where sanme like '%Vilas';
+
+create database employees;
+
+use employees;
+select * from employees ;
+select * from employees where first_name like '%l'; 
+
+select distinct first_name from employees where hire_date > 1999-06-09 order by first_name;
+
+select * from salaries;
+
+
+select max(salary) from salaries ;
+select max(salary) from salaries where salary < (select max(salary) from salaries where salary);
+select distinct salary from salaries where salary > 100000;
+use classicmodels;
+select * from customers;
+
+select * from customers where customernumber < 130 order by contactfirstname;
+
+select * from customers order by contactfirstname desc;
+============================================================================
+
+01-10-2023
+
+use classicmodels;
+select * from payments;
+select * from customers;
+select  sum(amount) from payments
+group by amount having count(amount) > 60000;
+select now();
+select curdate();
+
+
+select * from customers as c inner join payments as p on
+c.customernumber= p.customernumber;
+
+select * from customers full  join payments on 
+customers.customernumber= payments.customernumber;
+
+select * from customers as c1 join customers as c2 on 
+c1.customernumber=c2.customernumber;
+
+
+use classicmodels;
+select * from employees inner join dept_emp on
+employees.emp_no= dept_emp.emp_no;
+
+use sqltesting;
+select * from student as s1, student as s2 where
+s1.Studentid= s2.Studentid;
+select * from employee;
+insert into employee values(100, "Nita", 85000);
+insert into employee values(101, "Rahul", 88000);
+insert into employee values(102, "Mukesh", 90000);
+insert into employee values(103, "gagan", 67000);
+insert into employee values(1,"Ashok", 67);
+select * from student union all select * from employee;
+
+
+use employees;
+select * from employees limit 5;
+
+
+=== for duplicate delete row 
+create TABLE Emp1(Empid int(5), ename varchar(100), salary int(5));
+
+insert into Emp1 values(1, "Amit", 85000);
+insert into Emp1 values(2, "Vikas", 90000);
+insert into Emp1 values(1, "Amit", 85000);
+insert into Emp1 values(2, "Vikas", 90000);
+insert into Emp1 values(2, "Vikas", 90000);
+insert into Emp1 values(3, "Ashok", 67000);
+insert into Emp1 values(3, "Ashok", 67000);
+select * from Emp1;
+
+select distinct * from Emp1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create index ind1 on employees (first_name);
+select * from employees where jobtitle='President';
+select distinct(officeCode) from employees;
+
+select max(amount), min(amount), avg(amount) from payments;
+select * from  payments where amount between 110000 and 150000;
+select * from employees where not officecode=1;
+select * from employees where lastName like '%r';
+select firstname,count(*) from employees group by officecode having count(*)>=3;
+select * from  payments where amount= (select max(amount) from payments);
+select * from  offices;
+
+select * from employees where officeCode=(select * from offices where city='paris');
+
+select * from salaries;
+-- max salary;
+select max(salary) from salaries;  
+select salary from salaries order by salary desc limit 1;
+
+
+
+
+
+select salary from  (select salary from salaries order by salary desc limit 3) sal order by salary limit 1;
+
+-- second max salaray
+select max(salary) from salaries where salary < (select max(salary) from salaries);
+
+select salary from (select salary from salaries  order by salary desc limit 3) sal order by salary  limit 1;
+
+===========================
+
+
+/*for duplicate delete row */;
+use sqltesting;
+
+create TABLE Emp2(Empid INT(5), ename varchar(100), salary INT(5));
+
+insert into Emp2 values(1, "Amit", 85000);
+insert into Emp2 values(2, "Vikas", 90000);
+insert into Emp2 values(1, "Amit", 85000);
+insert into Emp2 values(2, "Vikas", 90000);
+insert into Emp2 values(2, "Vikas", 90000);
+insert into Emp2 values(3, "Ashok", 67000);
+insert into Emp2 values(3, "Ashok", 67000);
+
+select * from Emp2;
+
+select distinct * from Emp2;
+
+create table dupEmp2  select distinct * from Emp2;
+select distinct * from dupEmp2;
+delete from Emp2;
+insert into Emp2 select distinct * from dupEmp2;
+
+
+select * from Emp2;
+
+

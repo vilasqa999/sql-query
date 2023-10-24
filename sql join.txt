@@ -1,0 +1,9 @@
+use hrprojects;
+
+select * from employees full join departments on
+employees.department_id= departments.department_id;
+
+select * from employees cross join departments;
+
+select * from departments as d1, departments d2 where
+d1.department_id= d2.department_id;
